@@ -1,0 +1,26 @@
+@import "./fonts.css";
+@import "tailwindcss";
+
+@theme {
+  --font-AradFD: "AradFD";
+  --color-primary: #f97a00;
+  /* --color-secondary: #9fa8da; */
+  --color-red: #ed3500;
+
+  --color-text-main: #3d365c;
+  --color-text-secondary: #254d70;
+  /* --color-text-link: #916a88; */
+}
+* {
+  @apply font-AradFD;
+}
+
+body {
+  background: linear-gradient(135deg, #f4ebff, #62688a);
+  /* background-color: #f0f0f0; */
+  /* background: linear-gradient(135deg, #916a88, #c3cfe2); */
+}
+
+.btn-logout {
+  @apply text-red-600;
+}

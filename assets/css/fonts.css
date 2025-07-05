@@ -1,0 +1,55 @@
+@font-face {
+  font-family: "AradFD";
+  src: url("/assets/fonts/AradFD-Thin.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AradFD";
+  src: url("/assets/fonts/AradFD-ExtraLight.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AradFD";
+  src: url("/assets/fonts/AradFD-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AradFD";
+  src: url("/assets/fonts/AradFD-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AradFD";
+  src: url("/assets/fonts/AradFD-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AradFD";
+  src: url("/assets/fonts/AradFD-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AradFD";
+  src: url("/assets/fonts/AradFD-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AradFD";
+  src: url("/assets/fonts/AradFD-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+}
