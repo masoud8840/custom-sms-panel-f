@@ -54,6 +54,11 @@ const onCreate = async () => {
       method: "POST",
       body: code.value,
     });
-  } catch (error) {}
+
+    return navigateTo("/messages/codes");
+  } catch (error) {
+    // @ts-ignore
+    console.log(error.response._data);
+  }
 };
 </script>

@@ -19,6 +19,7 @@
           </NuxtLink>
           <button
             class="flex items-center gap-2 px-4 py-1 text-sm cursor-pointer hover:bg-red hover:text-white rounded-md border border-red text-red"
+            @click="onDelete(code._id)"
           >
             <icons-trash class="size-4" />حذف
           </button>
@@ -48,9 +49,24 @@ const initialFetch = async () => {
 
     codes.value = response.data;
   } catch (error) {
-    console.log("ERROR");
+    // @ts-ignore
+    console.log(error.response._data);
   }
 };
 await initialFetch();
-onMounted(async () => {});
+
+const onDelete = async (id: string) => {
+  try {
+    const runtimeConfigs = useRuntimeConfig();
+    const response = await $fetch(
+      `${runtimeConfigs.public.baseUrl}/codes/${id}`,
+      { method: "DELETE" }
+    );
+
+    await initialFetch()
+  } catch (error) {
+    // @ts-ignore
+    console.log(error.response._data);
+  }
+};
 </script>

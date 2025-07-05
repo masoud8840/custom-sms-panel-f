@@ -57,7 +57,10 @@ const initialFetch = async () => {
     useHead({
       title: `کد های عملیاتی | ${response.data.name}`,
     });
-  } catch (error) {}
+  } catch (error) {
+    // @ts-ignore
+    console.log(error.response._data);
+  }
 };
 await initialFetch();
 
@@ -66,7 +69,7 @@ const onEdit = async () => {
   const { code: keyCode, name, response } = code.value;
   const isCodeANumber = Number(keyCode);
   if (!!!isCodeANumber) return;
-  // if (!keyCode.length || !name.length || !response.length) return; // some error
+
   try {
     const runtimeConfigs = useRuntimeConfig();
     const baseUrl = runtimeConfigs.public.baseUrl;
@@ -78,8 +81,9 @@ const onEdit = async () => {
         body: code.value,
       }
     );
-
-    return navigateTo("/messages/codes");
-  } catch (error) {}
+  } catch (error) {
+    // @ts-ignore
+    console.log(error.response._data);
+  }
 };
 </script>
