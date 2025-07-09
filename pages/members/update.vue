@@ -77,7 +77,47 @@ const handleFileInput = (e: Event) => {
   }
 };
 
+let inProgress = false;
+const baseUrl = useRuntimeConfig().public.baseUrl;
 const handleUploadFile = async () => {
-  console.log(fileInput.value.file);
+  inProgress = true;
+  if (!fileInput.value.file) return;
+  const formData = new FormData();
+  formData.append("file", fileInput.value.file);
+
+  try {
+    const response = await $fetch(`${baseUrl}/members/update`, {
+      method: "POST",
+      body: formData,
+    });
+
+    console.log(response);
+  } catch (error) {
+  } finally {
+    inProgress = false;
+  }
 };
+
+const fetchCancelUpdate = async () => {
+  try {
+    const response = await $fetch(`${baseUrl}/members/abort`);
+
+    console.log(response);
+  } catch (error) {}
+};
+onBeforeRouteLeave(async (to, from, next) => {
+  if (inProgress) {
+    const answer = confirm(
+      "فرایند بروزرسانی در حال اجراست برای خروج از فرایند اطمینان دارید؟"
+    );
+    if (answer) {
+      await fetchCancelUpdate();
+      next();
+    } else {
+      next(false); // جلوگیری از ترک صفحه
+    }
+  } else {
+    next();
+  }
+});
 </script>
