@@ -38,6 +38,7 @@
           type="file"
           class="p-14 opacity-0 cursor-pointer"
           @change="handleFileInput"
+          accept=".xlsx"
         />
       </section>
       <button
