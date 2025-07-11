@@ -63,7 +63,7 @@ const onDelete = async (id: string) => {
       { method: "DELETE" }
     );
 
-    await initialFetch()
+    await initialFetch();
   } catch (error) {
     // @ts-ignore
     console.log(error.response._data);

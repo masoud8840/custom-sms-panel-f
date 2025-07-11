@@ -19,3 +19,10 @@ export interface IRequest<T> {
   };
   data: T;
 }
+
+export interface ICode {
+  _id: string;
+  code: string;
+  name: string;
+  response: string;
+}
