@@ -58,6 +58,7 @@
           id="messageText"
           placeholder="سلام {{fname}} {{lname}} عزیز ،"
           class="text-sm min-h-40 placeholder:transition-all placeholder:duration-150 focus:placeholder:pr-2 border focus:border-text-secondary border-text-main/15 outline-0 w-full rounded-lg px-3 py-2"
+          v-model="text"
         ></textarea>
       </section>
       <button
@@ -79,6 +80,7 @@ const fileInput = ref({
   size: "",
   file: null as File | null,
 });
+const text = ref("");
 
 const handleFileInput = (e: Event) => {
   const target = e.target as HTMLInputElement;
@@ -99,6 +101,21 @@ const handleFileInput = (e: Event) => {
 };
 
 const handleUploadFile = async () => {
-  console.log(fileInput.value.file);
+  try {
+    if (!fileInput.value.file) {
+      return;
+    }
+    const baseUrl = useRuntimeConfig().public.baseUrl;
+    const formData = new FormData();
+    formData.append("file", fileInput.value.file);
+    formData.append("text", text.value);
+
+    const response = await $fetch(`${baseUrl}/messages/send`, {
+      method: "POST",
+      body: formData,
+    });
+
+    console.log(response);
+  } catch (error) {}
 };
 </script>
