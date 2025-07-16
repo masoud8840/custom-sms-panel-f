@@ -26,3 +26,12 @@ export interface ICode {
   name: string;
   response: string;
 }
+
+export interface IMember {
+  _id: string;
+  fname: string;
+  lname: string;
+  personalCode: string;
+  nationalityCode: string;
+  cellphone: string;
+}

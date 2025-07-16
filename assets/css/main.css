@@ -21,6 +21,18 @@ body {
   /* background: linear-gradient(135deg, #916a88, #c3cfe2); */
 }
 
+body,
+html {
+  @apply scroll-smooth;
+}
 .btn-logout {
   @apply text-red-600;
+}
+
+.loading-overlay .dot-2 {
+  animation-delay: 200ms;
+}
+
+.loading-overlay .dot-3 {
+  animation-delay: 400ms;
 }
