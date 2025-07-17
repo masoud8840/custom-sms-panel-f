@@ -6,7 +6,7 @@
       جستجو اعضاء
     </h3>
     <form
-      class="search-form grid grid-cols-5 gap-4"
+      class="search-form grid grid-cols-5 gap-4 mb-8"
       autocomplete="off"
       @submit.prevent="onSearch"
     >
@@ -88,7 +88,7 @@
       </button>
     </form>
     <template v-if="!isLoading">
-      <ul class="mt-8 space-y-4">
+      <ul class="space-y-4">
         <li
           v-for="member in members"
           :key="member._id"
@@ -107,12 +107,21 @@
         v-if="members.length"
       />
     </template>
-    <Loading v-else />
+    <template v-else>
+      <content-loader
+        viewBox="0 0 500 150"
+        :speed="1.25"
+        primaryColor="#f3f3f3"
+        secondaryColor="#ecebeb"
+      >
+        <rect x="0" y="0" rx="0" ry="0" width="498" height="23" />
+        <rect x="0" y="32" rx="0" ry="0" width="498" height="23" />
+      </content-loader>
+    </template>
   </main>
 </template>
 <script lang="ts" setup>
-import Loading from "~/components/Loading.vue";
-
+import { ContentLoader } from "vue-content-loader";
 useHead({
   title: "عملیات اعضاء | جستجو",
 });

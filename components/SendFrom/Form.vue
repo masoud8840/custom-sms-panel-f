@@ -1,5 +1,5 @@
 <template>
-  <form class="space-y-6 mt-6" @submit.prevent="onSubmit">
+  <form class="space-y-6" @submit.prevent="onSubmit">
     <section class="input-group">
       <label
         for="code"
