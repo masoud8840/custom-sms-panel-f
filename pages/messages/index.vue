@@ -38,7 +38,9 @@ import {
 useHead({
   title: "عملیات پیامکها",
 });
-
+definePageMeta({
+  middleware: ["auth-guard"],
+});
 const messagesLinks = shallowRef([
   {
     icon: IconsSend,

@@ -28,7 +28,9 @@ import { IconsRefresh, IconsSearch } from "#components";
 useHead({
   title: "عملیات اعضاء",
 });
-
+definePageMeta({
+  middleware: ["auth-guard"],
+});
 const membersLinks = shallowRef([
   {
     icon: IconsSearch,

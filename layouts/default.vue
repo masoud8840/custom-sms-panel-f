@@ -69,7 +69,7 @@ const navLinks = computed(() => {
       text: "حساب کاربری",
       icon: IconsUserCircle,
       to: "/auth",
-      visibility: true,
+      visibility: !authStore.getUser,
     },
     {
       text: "برنامه های کاربردی",
