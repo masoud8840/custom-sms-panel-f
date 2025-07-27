@@ -30,6 +30,7 @@ export const useAuthStore = defineStore("auth", {
         );
         this.user = response.data;
         localStorage.setItem("token", response.data.token);
+        return navigateTo("/");
       } catch (error) {
         // @ts-ignore
         console.log(error.response._data);
@@ -47,6 +48,7 @@ export const useAuthStore = defineStore("auth", {
             password,
           },
         });
+        return navigateTo("/");
       } catch (error) {
         // @ts-ignore
         console.log(error.response._data);
@@ -69,6 +71,7 @@ export const useAuthStore = defineStore("auth", {
 
         // (response);
         this.user = response.data;
+        return navigateTo("/");
       } catch (error) {
         // @ts-ignore
         console.log(error.response._data);

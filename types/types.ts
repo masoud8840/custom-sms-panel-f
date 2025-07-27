@@ -35,4 +35,17 @@ export interface IMember {
   personalCode: string;
   nationalityCode: string;
   cellphone: string;
+  birthdate: number;
+  gender: number;
+  relationship: number;
+  city: string;
+  state: string;
+}
+export interface IMessage {
+  _id: string;
+  to: string;
+  from: string;
+  text: string;
+  from_id: IMember;
+  createdAt: string;
 }

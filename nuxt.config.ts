@@ -20,6 +20,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseUrl: "http://localhost:3001/api/v1",
+      // baseUrl: "http://81.12.41.178:81/api/v1",
     },
   },
 });

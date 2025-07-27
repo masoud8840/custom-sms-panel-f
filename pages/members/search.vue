@@ -82,9 +82,10 @@
       </section>
       <button
         type="submit"
-        class="w-fit px-6 py-1.5 text-base font-medium cursor-pointer hover:bg-primary hover:text-white rounded-lg border border-primary text-primary"
+        class="w-fit flex gap-2 items-center px-6 py-1.5 text-base font-medium cursor-pointer hover:bg-primary hover:text-white rounded-lg border border-primary text-primary"
       >
-        جستجو کن!
+        <IconsSearch class="size-6" />
+        جستجو
       </button>
     </form>
     <template v-if="!isLoading">
