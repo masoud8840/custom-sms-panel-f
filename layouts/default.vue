@@ -36,6 +36,7 @@
 <script lang="ts" setup>
 import {
   IconsCubePlus,
+  IconsDocumentBar,
   IconsHome,
   IconsInfo,
   IconsMessageText,
@@ -63,6 +64,12 @@ const navLinks = computed(() => {
       text: "اعضاء",
       icon: IconsUserGroup,
       to: "/members",
+      visibility: authStore.getUser,
+    },
+    {
+      text: "گزارشات",
+      icon: IconsDocumentBar,
+      to: "/reports",
       visibility: authStore.getUser,
     },
     {
