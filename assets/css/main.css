@@ -41,3 +41,6 @@ html {
   display: grid;
   grid-template-columns: 0.7fr 1fr 1.1fr 1.1fr 1.25fr 2fr;
 }
+.table-body-row {
+  @apply hover:bg-text-main/10 py-3 px-4 text-text-main font-medium items-center select-none;
+}

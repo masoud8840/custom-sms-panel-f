@@ -123,6 +123,7 @@
 </template>
 <script lang="ts" setup>
 import { ContentLoader } from "vue-content-loader";
+import type { IMember, IRequest } from "~/types/types";
 useHead({
   title: "عملیات اعضاء | جستجو",
 });
@@ -142,7 +143,7 @@ const pagination = ref({
   limit: 0,
 });
 const baseUrl = useRuntimeConfig().public.baseUrl;
-const members = ref([]);
+const members = ref<IMember[]>([]);
 const isLoading = ref(false);
 const onSearch = async () => {
   const { cellphone, fname, lname, nationalityCode, personalCode } =
@@ -158,15 +159,14 @@ const onSearch = async () => {
       params.append("nationalityCode", nationalityCode.trim());
     if (personalCode) params.append("personalCode", personalCode.trim());
     params.append("page", pagination.value.page.toString());
-    scrollTo({ top: 0 });
+
     try {
-      const response = await $fetch(
+      const response = await $fetch<IRequest<IMember[]>>(
         `${baseUrl}/members/search?${params.toString()}`
       );
 
       members.value = response.data;
-
-      pagination.value = { ...response.pagination };
+      pagination.value = { ...response.pagination! };
 
       console.log(response);
     } catch (error) {

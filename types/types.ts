@@ -19,6 +19,12 @@ export interface IRequest<T> {
     message: string;
   };
   data: T;
+  pagination?: {
+    limit: number;
+    page: number;
+    total: number;
+    totalPages: number;
+  };
 }
 
 export interface ICode {
