@@ -84,6 +84,8 @@ const onEdit = async () => {
   } catch (error) {
     // @ts-ignore
     console.log(error.response._data);
+  } finally {
+    return navigateTo("/messages/codes");
   }
 };
 </script>
