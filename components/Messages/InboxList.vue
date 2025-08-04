@@ -70,6 +70,7 @@
           v-for="message in messages"
           :key="message._id"
         >
+          <pre>{{ message }}</pre>
           <h5>{{ message.from_id.fname }}</h5>
           <h5>{{ message.from_id.lname }}</h5>
           <h5>{{ message.from_id.personalCode }}</h5>
@@ -90,8 +91,11 @@
   </section>
 </template>
 <script lang="ts" setup>
-import moment from "jalali-moment";
+import dayjs from "dayjs";
+import jalaliday from "jalali-plugin-dayjs";
 import type { IMessage, IRequest } from "~/types/types";
+
+dayjs.extend(jalaliday);
 
 const filters = ref([
   {
@@ -138,17 +142,17 @@ const extractQueryParams = () => {
   const toDate = filters.value[3];
   let gregorianFrom, gregorianTo;
   if (fromDate.value)
-    gregorianFrom = moment.from(fromDate.value, "fa", "jYYYY/jMM/jDD HH:mm");
+    gregorianFrom = dayjs(fromDate.value, { jalali: true }).toISOString();
   if (toDate.value)
-    gregorianTo = moment.from(toDate.value, "fa", "jYYYY/jMM/jDD HH:mm");
+    gregorianTo = dayjs(toDate.value, { jalali: true }).toISOString();
 
   const params = new URLSearchParams();
 
-  if (gregorianFrom?.isValid()) {
-    params.append("from", gregorianFrom.toISOString());
+  if (gregorianFrom) {
+    params.append("from", gregorianFrom);
   }
-  if (gregorianTo?.isValid()) {
-    params.append("to", gregorianTo.toISOString());
+  if (gregorianTo) {
+    params.append("to", gregorianTo);
   }
   if (cellphone.value) {
     params.append("cellphone", cellphone.value);
@@ -162,6 +166,7 @@ const extractQueryParams = () => {
 const handleSearchMessages = async () => {
   const params = extractQueryParams();
 
+  console.log(params);
   try {
     const response = await $fetch<IRequest<IMessage[]>>(
       `${baseUrl}/messages?${params.toString()}`,
