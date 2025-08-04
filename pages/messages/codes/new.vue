@@ -27,11 +27,18 @@
           >
         </section>
       </section>
-      <textarea
-        class="codes-response col-span-3 text-text-main text-sm min-h-40 placeholder:transition-all placeholder:duration-150 focus:placeholder:pr-2 border focus:border-text-secondary border-text-main/15 outline-0 w-full rounded-lg px-3 py-2"
-        placeholder="پاسخی برای این کد تعیین کنید*"
-        v-model="code.response"
-      ></textarea>
+      <section class="col-span-3">
+        <textarea
+          class="codes-response text-text-main text-sm min-h-40 placeholder:transition-all placeholder:duration-150 focus:placeholder:pr-2 border focus:border-text-secondary border-text-main/15 outline-0 w-full rounded-lg px-3 py-2"
+          placeholder="پاسخی برای این کد تعیین کنید*"
+          v-model="code.response"
+        ></textarea>
+        <textarea
+          class="codes-response text-text-main text-sm min-h-40 placeholder:transition-all placeholder:duration-150 focus:placeholder:pr-2 border focus:border-text-secondary border-text-main/15 outline-0 w-full rounded-lg px-3 py-2"
+          placeholder="پاسخی برای زمانی که عضو واجد شرایط این کد نیست (اختیاری)"
+          v-model="code.deniedResponse"
+        ></textarea>
+      </section>
     </form>
   </main>
 </template>
@@ -43,6 +50,7 @@ const code = ref({
   code: "",
   name: "",
   response: "",
+  deniedResponse  : "",
 });
 
 const onCreate = async () => {

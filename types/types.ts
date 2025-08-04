@@ -32,6 +32,7 @@ export interface ICode {
   code: string;
   name: string;
   response: string;
+  deniedResponse?: string;
 }
 
 export interface IMember {

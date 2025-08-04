@@ -41,12 +41,17 @@
   </NuxtLink>
 </template>
 <script lang="ts" setup>
-const codes = ref();
+import type { ICode, IRequest } from "~/types/types";
+
+const codes = ref<ICode[]>();
 const initialFetch = async () => {
   try {
     const runtimeConfigs = useRuntimeConfig();
-    const response = await $fetch(`${runtimeConfigs.public.baseUrl}/codes`);
+    const response = await $fetch<IRequest<ICode[]>>(
+      `${runtimeConfigs.public.baseUrl}/codes`
+    );
 
+    console.log(response);
     codes.value = response.data;
   } catch (error) {
     // @ts-ignore
