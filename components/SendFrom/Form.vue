@@ -33,6 +33,7 @@
         id="cellphone"
         placeholder="09123456789"
         class="text-sm placeholder:transition-all placeholder:duration-150 focus:placeholder:pr-2 border focus:border-text-secondary border-text-main/15 outline-0 w-full rounded-lg px-3 py-2"
+        v-model="cellphone"
       />
     </section>
     <button
@@ -48,6 +49,7 @@ import type { ICode, IRequest } from "~/types/types";
 
 const codes = ref<ICode[]>();
 const selectedCodeId = ref("default");
+const cellphone = ref("");
 
 const initialFetch = async () => {
   try {
@@ -57,7 +59,6 @@ const initialFetch = async () => {
     );
 
     codes.value = response.data;
-    console.log(response);
   } catch (error) {
     // @ts-ignore
     console.log(error.response._data);

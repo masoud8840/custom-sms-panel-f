@@ -23,4 +23,6 @@ export default defineNuxtConfig({
       // baseUrl: "http://81.12.41.178:81/api/v1",
     },
   },
+
+  plugins: ["./plugins/dayjs.ts"],
 });

@@ -70,7 +70,6 @@
           v-for="message in messages"
           :key="message._id"
         >
-          <pre>{{ message }}</pre>
           <h5>{{ message.from_id.fname }}</h5>
           <h5>{{ message.from_id.lname }}</h5>
           <h5>{{ message.from_id.personalCode }}</h5>
@@ -91,11 +90,8 @@
   </section>
 </template>
 <script lang="ts" setup>
-import dayjs from "dayjs";
-import jalaliday from "jalali-plugin-dayjs";
 import type { IMessage, IRequest } from "~/types/types";
-
-dayjs.extend(jalaliday);
+const { $dayjs } = useNuxtApp();
 
 const filters = ref([
   {
@@ -142,9 +138,9 @@ const extractQueryParams = () => {
   const toDate = filters.value[3];
   let gregorianFrom, gregorianTo;
   if (fromDate.value)
-    gregorianFrom = dayjs(fromDate.value, { jalali: true }).toISOString();
+    gregorianFrom = $dayjs(fromDate.value, { jalali: true }).toISOString();
   if (toDate.value)
-    gregorianTo = dayjs(toDate.value, { jalali: true }).toISOString();
+    gregorianTo = $dayjs(toDate.value, { jalali: true }).toISOString();
 
   const params = new URLSearchParams();
 
