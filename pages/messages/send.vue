@@ -99,7 +99,7 @@ const handleFileInput = (e: Event) => {
     };
   }
 };
-
+const token = localStorage.getItem("token") || "";
 const handleUploadFile = async () => {
   try {
     if (!fileInput.value.file) {
@@ -113,6 +113,9 @@ const handleUploadFile = async () => {
     const response = await $fetch(`${baseUrl}/messages/send`, {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: token,
+      },
     });
 
     console.log(response);

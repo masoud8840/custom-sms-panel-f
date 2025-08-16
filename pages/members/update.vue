@@ -80,6 +80,7 @@ const handleFileInput = (e: Event) => {
 
 let inProgress = false;
 const baseUrl = useRuntimeConfig().public.baseUrl;
+const token = localStorage.getItem("token") || "";
 const handleUploadFile = async () => {
   inProgress = true;
   if (!fileInput.value.file) return;
@@ -90,9 +91,10 @@ const handleUploadFile = async () => {
     const response = await $fetch(`${baseUrl}/members/update`, {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: token,
+      },
     });
-
-    console.log(response);
   } catch (error) {
   } finally {
     inProgress = false;
@@ -101,9 +103,11 @@ const handleUploadFile = async () => {
 
 const fetchCancelUpdate = async () => {
   try {
-    const response = await $fetch(`${baseUrl}/members/abort`);
-
-    console.log(response);
+    const response = await $fetch(`${baseUrl}/members/abort`, {
+      headers: {
+        Authorization: token,
+      },
+    });
   } catch (error) {}
 };
 onBeforeRouteLeave(async (to, from, next) => {

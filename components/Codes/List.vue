@@ -42,13 +42,19 @@
 </template>
 <script lang="ts" setup>
 import type { ICode, IRequest } from "~/types/types";
+const token = localStorage.getItem("token") || "";
 
 const codes = ref<ICode[]>();
 const initialFetch = async () => {
   try {
     const runtimeConfigs = useRuntimeConfig();
     const response = await $fetch<IRequest<ICode[]>>(
-      `${runtimeConfigs.public.baseUrl}/codes`
+      `${runtimeConfigs.public.baseUrl}/codes`,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
     );
 
     console.log(response);
@@ -65,7 +71,12 @@ const onDelete = async (id: string) => {
     const runtimeConfigs = useRuntimeConfig();
     const response = await $fetch(
       `${runtimeConfigs.public.baseUrl}/codes/${id}`,
-      { method: "DELETE" }
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
+      }
     );
 
     await initialFetch();

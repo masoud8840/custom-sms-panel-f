@@ -48,6 +48,43 @@
           v-model="signupCreds.password"
         />
       </section>
+
+      <section
+        class="input-group"
+        v-if="authStore.getUser?.role == IRole.Admin"
+      >
+        <label
+          for="role"
+          class="block font-semibold text-text-main text-base leading-loose mb-1"
+          >سطح دسترسی</label
+        >
+        <button
+          type="button"
+          :class="[
+            'mr-2 text-base cursor-pointer text-text-main/50 leading-loose mb-1 border border-text-main/15 px-6 py-1.5 rounded-lg font-medium',
+            {
+              'text-white bg-primary border-transparent':
+                signupCreds.role == IRole.User,
+            },
+          ]"
+          @click="toggleRole(IRole.User)"
+        >
+          کاربر عادی
+        </button>
+        <button
+          type="button"
+          :class="[
+            'mr-4 text-base cursor-pointer text-text-main/50 leading-loose mb-1 border border-text-main/15 px-6 py-1.5 rounded-lg font-medium',
+            {
+              'text-white bg-primary border-transparent':
+                signupCreds.role == IRole.Admin,
+            },
+          ]"
+          @click="toggleRole(IRole.Admin)"
+        >
+          مدیریت
+        </button>
+      </section>
       <section class="input-group">
         <button
           type="submit"
@@ -61,6 +98,8 @@
 </template>
 
 <script lang="ts" setup>
+import { IRole } from "~/types/types";
+
 useHead({
   title: "عملیات حساب | ایجاد",
 });
@@ -69,11 +108,16 @@ const signupCreds = ref({
   fullname: "",
   username: "",
   password: "",
+  role: IRole.User,
 });
 
+const authStore = useAuthStore();
 const signup = async () => {
-  const authStore = useAuthStore();
-  const { fullname, password, username } = signupCreds.value;
-  await authStore.signup(fullname, username, password);
+  const { fullname, password, username, role } = signupCreds.value;
+  await authStore.signup(fullname, username, password, role);
+};
+
+const toggleRole = (role: number) => {
+  signupCreds.value.role = role;
 };
 </script>

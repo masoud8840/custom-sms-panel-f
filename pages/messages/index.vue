@@ -4,7 +4,7 @@
       <ul class="grid grid-cols-3 gap-4">
         <li
           class="grid"
-          v-for="(link, counter) in messagesLinks"
+          v-for="(link, counter) in linkWithPermission"
           :key="counter"
         >
           <NuxtLink
@@ -34,6 +34,7 @@ import {
   IconsSend,
   IconsSendFrom,
 } from "#components";
+import { IRole } from "~/types/types";
 
 useHead({
   title: "عملیات پیامکها",
@@ -41,36 +42,47 @@ useHead({
 definePageMeta({
   middleware: ["auth-guard"],
 });
+
+const authStore = useAuthStore();
 const messagesLinks = shallowRef([
   {
     icon: IconsSend,
     text: "ارسال سریع*",
     caption: "به اشخاص مورد نظر پیامک ارسال کنید",
     to: "/messages/send",
+    visibility: authStore.getUser?.role == IRole.Admin,
   },
   {
     icon: IconsSendFrom,
     text: "ارسال از شخص",
     caption: "از طرف اشخاص پیامک ارسال کنید",
     to: "/messages/send-from",
+    visibility: true,
   },
   {
     icon: IconsInboxArrow,
     text: "صندوق دریافتی",
     caption: "پیامک های دریافت شده را ببینید",
     to: "/messages/inbox",
+    visibility: true,
   },
   {
     icon: IconsHashtag,
     text: "کد های عملیاتی*",
     caption: "کد های قابل دریافت توسط سامانه را ببینید",
     to: "/messages/codes",
+    visibility: authStore.getUser?.role == IRole.Admin,
   },
   {
     icon: IconsKey,
     text: "پیامکهای بازیابی رمز*",
     caption: "درخواست های بازیابی رمز عبور را ببینید",
     to: "/messages/reset-password",
+    visibility: authStore.getUser?.role == IRole.Admin,
   },
 ]);
+
+const linkWithPermission = computed(() =>
+  messagesLinks.value.filter((m) => m.visibility == true)
+);
 </script>

@@ -5,7 +5,8 @@
   --font-AradFD: "AradFD";
   --color-primary: #f97a00;
   /* --color-secondary: #9fa8da; */
-  --color-red: #ed3500;
+  --color-red: #e43636;
+  --color-green: #08cb00;
 
   --color-text-main: #3d365c;
   --color-text-secondary: #254d70;
@@ -43,4 +44,8 @@ html {
 }
 .table-body-row {
   @apply hover:bg-text-main/10 py-3 px-4 text-text-main font-medium items-center select-none;
+}
+
+.msg-text {
+  @apply font-semibold text-center text-xl text-text-main;
 }

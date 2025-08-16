@@ -50,8 +50,9 @@ const code = ref({
   code: "",
   name: "",
   response: "",
-  deniedResponse  : "",
+  deniedResponse: "",
 });
+const token = localStorage.getItem("token") || "";
 
 const onCreate = async () => {
   const runtimeConfigs = useRuntimeConfig();
@@ -61,6 +62,9 @@ const onCreate = async () => {
     const fetchResponse = await $fetch(`${baseUrl}/codes`, {
       method: "POST",
       body: code.value,
+      headers: {
+        Authorization: token,
+      },
     });
 
     return navigateTo("/messages/codes");

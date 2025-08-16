@@ -5,7 +5,7 @@
     >
       <aside class="col-span-2 h-full bg-white p-6 rounded-4xl">
         <nav class="h-full">
-          <ul class="flex flex-col gap-2">
+          <ul class="flex flex-col gap-2 h-full">
             <li v-for="(link, counter) in navLinks" :key="counter">
               <NuxtLink
                 :to="link.to"
@@ -15,6 +15,15 @@
                 <component :is="link.icon" class="size-7" />
                 {{ link.text }}
               </NuxtLink>
+            </li>
+            <li class="mt-auto" v-if="authStore.getUser">
+              <button
+                class="flex w-full font-medium tracking-wide items-center gap-3 py-2.5 px-4 text-base rounded-md text-red cursor-pointer"
+                @click="authStore.logout"
+              >
+                <IconsLogout class="size-7" />
+                خروج از حساب کاربری
+              </button>
             </li>
           </ul>
         </nav>
@@ -43,6 +52,7 @@ import {
   IconsUserCircle,
   IconsUserGroup,
 } from "#components";
+import { IRole } from "~/types/types";
 
 const authStore = useAuthStore();
 const today = useState("today", () => ref(new Date()));
@@ -76,7 +86,7 @@ const navLinks = computed(() => {
       text: "حساب کاربری",
       icon: IconsUserCircle,
       to: "/auth",
-      visibility: !authStore.getUser,
+      visibility: authStore.getUser?.role == IRole.Admin,
     },
     {
       text: "برنامه های کاربردی",

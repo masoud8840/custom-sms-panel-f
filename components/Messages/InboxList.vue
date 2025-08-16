@@ -61,7 +61,7 @@
         <h5>متن پیامک</h5>
       </div>
     </section>
-    <section class="table-body">
+    <section class="table-body" v-if="messages?.length">
       <ul
         class="rounded-b-lg space-y-3 border border-text-main/25 border-t-0 py-3"
       >
@@ -87,6 +87,7 @@
         </li>
       </ul>
     </section>
+    <h3 v-else>هیچ پیامکی برای نمایش وجود ندارد!</h3>
   </section>
 </template>
 <script lang="ts" setup>
@@ -96,7 +97,7 @@ const { $dayjs } = useNuxtApp();
 const filters = ref([
   {
     name: "cellphone",
-    value: "9370700162",
+    value: "",
     label: "تلفن همراه",
   },
   {

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { IRequest, IUser, IUserWithToken } from "~/types/types";
+import type { IRequest, IRole, IUser, IUserWithToken } from "~/types/types";
 
 interface IState {
   user: IUser | null;
@@ -36,7 +36,12 @@ export const useAuthStore = defineStore("auth", {
         console.log(error.response._data);
       }
     },
-    async signup(fullname: string, username: string, password: string) {
+    async signup(
+      fullname: string,
+      username: string,
+      password: string,
+      role: IRole
+    ) {
       const runtimeConfig = useRuntimeConfig();
       const baseUrl = runtimeConfig.public.baseUrl;
       try {
@@ -46,6 +51,7 @@ export const useAuthStore = defineStore("auth", {
             fullname,
             username,
             password,
+            role,
           },
         });
         return navigateTo("/");
@@ -76,6 +82,11 @@ export const useAuthStore = defineStore("auth", {
         // @ts-ignore
         console.log(error.response._data);
       }
+    },
+    logout() {
+      localStorage.removeItem("token");
+      this.user = null;
+      return navigateTo("/");
     },
   },
 });

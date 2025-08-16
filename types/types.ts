@@ -1,4 +1,4 @@
-enum IRole {
+export enum IRole {
   User,
   Admin,
 }
@@ -8,6 +8,7 @@ export interface IUser {
   username: string;
   password: string;
   role: IRole;
+  verified: boolean;
 }
 
 export interface IUserWithToken extends IUser {

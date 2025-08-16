@@ -56,12 +56,18 @@ const code = ref<ICode>({
   response: "",
   deniedResponse: "",
 });
+const token = localStorage.getItem("token") || "";
 
 const initialFetch = async () => {
   try {
     const runtimeConfigs = useRuntimeConfig();
     const response = await $fetch<IRequest<ICode>>(
-      `${runtimeConfigs.public.baseUrl}/codes/${useRoute().params.slug}`
+      `${runtimeConfigs.public.baseUrl}/codes/${useRoute().params.slug}`,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
     );
 
     code.value = response.data;
@@ -90,6 +96,9 @@ const onEdit = async () => {
       {
         method: "PUT",
         body: code.value,
+        headers: {
+          Authorization: token,
+        },
       }
     );
   } catch (error) {

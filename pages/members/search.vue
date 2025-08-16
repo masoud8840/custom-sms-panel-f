@@ -89,7 +89,7 @@
       </button>
     </form>
     <template v-if="!isLoading">
-      <ul class="space-y-4">
+      <ul class="space-y-4" v-if="members.length">
         <li
           v-for="member in members"
           :key="member._id"
@@ -98,6 +98,7 @@
           <MembersSearchItem :member="member" />
         </li>
       </ul>
+      <h3 v-else class="msg-text">لیست اعضاء خالی میباشد!</h3>
 
       <Pagination
         :page="pagination.page"
