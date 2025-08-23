@@ -44,7 +44,6 @@
 
 <script lang="ts" setup>
 import {
-  IconsCubePlus,
   IconsDocumentBar,
   IconsHome,
   IconsInfo,
@@ -80,19 +79,13 @@ const navLinks = computed(() => {
       text: "گزارشات",
       icon: IconsDocumentBar,
       to: "/reports",
-      visibility: authStore.getUser,
+      visibility: authStore.getUser?.role == IRole.Admin,
     },
     {
       text: "حساب کاربری",
       icon: IconsUserCircle,
       to: "/auth",
-      visibility: authStore.getUser?.role == IRole.Admin,
-    },
-    {
-      text: "برنامه های کاربردی",
-      icon: IconsCubePlus,
-      to: "/apps",
-      visibility: true,
+      visibility: !authStore.getUser || authStore.getUser.role == IRole.Admin,
     },
     {
       text: "راهنما",

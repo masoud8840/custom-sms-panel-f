@@ -46,6 +46,9 @@
 useHead({
   title: "کد های عملیاتی | کد جدید",
 });
+definePageMeta({
+  middleware: ["auth-guard", "admin-gaurd"],
+});
 const code = ref({
   code: "",
   name: "",

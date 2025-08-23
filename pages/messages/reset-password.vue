@@ -24,4 +24,7 @@ import { ContentLoader } from "vue-content-loader";
 useHead({
   title: "عملیات پیامکها | بازیابی رمز عبور",
 });
+definePageMeta({
+  middleware: ["auth-guard", "admin-gaurd"],
+});
 </script>

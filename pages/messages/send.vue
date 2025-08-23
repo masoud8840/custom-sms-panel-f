@@ -75,6 +75,9 @@
 useHead({
   title: "عملیات پیامکها | ارسال عادی",
 });
+definePageMeta({
+  middleware: ["auth-guard", "admin-gaurd"],
+});
 const fileInput = ref({
   name: "",
   size: "",

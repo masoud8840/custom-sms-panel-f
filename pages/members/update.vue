@@ -54,6 +54,9 @@
 useHead({
   title: "عملیات اعضاء | بروزرسانی",
 });
+definePageMeta({
+  middleware: ["auth-guard", "admin-gaurd"],
+});
 const fileInput = ref({
   name: "",
   size: "",

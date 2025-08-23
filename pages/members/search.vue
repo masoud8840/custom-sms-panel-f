@@ -128,6 +128,9 @@ import type { IMember, IRequest } from "~/types/types";
 useHead({
   title: "عملیات اعضاء | جستجو",
 });
+definePageMeta({
+  middleware: ["auth-guard"],
+});
 
 const search = ref({
   fname: "",

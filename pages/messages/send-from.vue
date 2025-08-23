@@ -32,7 +32,7 @@
         </content-loader>
       </template>
       <template #default>
-        <SendFromForm @on-submit="onSendFrom" />
+        <SendFromForm />
       </template>
     </Suspense>
   </main>
@@ -43,7 +43,8 @@ import { ContentLoader } from "vue-content-loader";
 useHead({
   title: "عملیات پیامکها | ارسال از شخص",
 });
-const onSendFrom = async (id: string) => {
-  console.log(id);
-};
+
+definePageMeta({
+  middleware: ["auth-guard"],
+});
 </script>

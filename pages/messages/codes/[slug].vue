@@ -49,6 +49,9 @@ import type { ICode, IRequest } from "~/types/types";
 useHead({
   title: "کد های عملیاتی |",
 });
+definePageMeta({
+  middleware: ["auth-guard", "admin-gaurd"],
+});
 const code = ref<ICode>({
   _id: "",
   code: "",

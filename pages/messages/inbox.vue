@@ -32,4 +32,7 @@ import { ContentLoader } from "vue-content-loader";
 useHead({
   title: "عملیات پیامکها | صندوق دریافتی",
 });
+definePageMeta({
+  middleware: ["auth-guard"],
+});
 </script>

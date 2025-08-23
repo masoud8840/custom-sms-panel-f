@@ -74,7 +74,9 @@
 
 <script lang="ts" setup>
 import { IRole, type IRequest, type IUser } from "~/types/types";
-
+definePageMeta({
+  middleware: ["auth-guard", "admin-gaurd"],
+});
 useHead({
   title: "عملیات حساب | مدیریت",
 });

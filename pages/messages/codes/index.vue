@@ -5,7 +5,8 @@
         <content-loader
           viewBox="0 0 500 150"
           :speed="1.25"
-          primaryColor="#f3f3f3" secondaryColor="#ecebeb"
+          primaryColor="#f3f3f3"
+          secondaryColor="#ecebeb"
         >
           <rect x="490" y="0" rx="0" ry="0" width="10" height="13" />
           <rect x="350" y="16" rx="0" ry="0" width="150" height="13" />
@@ -25,5 +26,8 @@
 import { ContentLoader } from "vue-content-loader";
 useHead({
   title: "عملیات پیامکها | کد های عملیاتی",
+});
+definePageMeta({
+  middleware: ["auth-guard", "admin-gaurd"],
 });
 </script>
