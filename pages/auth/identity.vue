@@ -69,7 +69,7 @@
         </ul>
       </li>
     </ul>
-    <h3 v-else class="msg-text">کاربری وجود ندارد!  </h3>
+    <h3 v-else class="msg-text">کاربری وجود ندارد!</h3>
   </main>
 </template>
 
@@ -117,15 +117,20 @@ const onVerify = async (id: string) => {
 };
 
 const onDelete = async (id: string) => {
+  const notif = push.promise("در حال حذف کاربر...");
   try {
-    const response = await $fetch(`${baseUrl}/users/${id}`, {
+    const response = await $fetch<IRequest<{}>>(`${baseUrl}/users/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: token,
       },
     });
+    notif.resolve(response.message);
     await initFetch();
-  } catch (error) {}
+  } catch (error) {
+    // @ts-ignore
+    notif.reject(error.response._data.message);
+  }
 };
 const usersExceptCurrentUser = computed(() =>
   users.value?.filter((u) => u._id !== authStore.getUser?._id)
