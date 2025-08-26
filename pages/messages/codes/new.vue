@@ -43,6 +43,8 @@
   </main>
 </template>
 <script lang="ts" setup>
+import type { IRequest } from "~/types/types";
+
 useHead({
   title: "کد های عملیاتی | کد جدید",
 });
@@ -58,11 +60,12 @@ const code = ref({
 const token = localStorage.getItem("token") || "";
 
 const onCreate = async () => {
+  const notif = push.promise("در حال ایجاد کد عملیاتی...");
   const runtimeConfigs = useRuntimeConfig();
   const baseUrl = runtimeConfigs.public.baseUrl;
 
   try {
-    const fetchResponse = await $fetch(`${baseUrl}/codes`, {
+    const fetchResponse = await $fetch<IRequest<{}>>(`${baseUrl}/codes`, {
       method: "POST",
       body: code.value,
       headers: {
@@ -70,10 +73,11 @@ const onCreate = async () => {
       },
     });
 
+    notif.resolve(fetchResponse.message);
     return navigateTo("/messages/codes");
   } catch (error) {
     // @ts-ignore
-    console.log(error.response._data);
+    notif.reject(error.response._data.message);
   }
 };
 </script>

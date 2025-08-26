@@ -44,6 +44,7 @@
           type="file"
           class="p-14 opacity-0 cursor-pointer"
           @change="handleFileInput"
+          accept=".xlsx"
           id="recievers"
         />
       </section>
@@ -72,6 +73,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { IRequest } from "~/types/types";
+
 useHead({
   title: "عملیات پیامکها | ارسال عادی",
 });
@@ -104,6 +107,7 @@ const handleFileInput = (e: Event) => {
 };
 const token = localStorage.getItem("token") || "";
 const handleUploadFile = async () => {
+  const notif = push.promise("در حال ارسال اطلاعات...");
   try {
     if (!fileInput.value.file) {
       return;
@@ -113,15 +117,17 @@ const handleUploadFile = async () => {
     formData.append("file", fileInput.value.file);
     formData.append("text", text.value);
 
-    const response = await $fetch(`${baseUrl}/messages/send`, {
+    const response = await $fetch<IRequest<{}>>(`${baseUrl}/messages/send`, {
       method: "POST",
       body: formData,
       headers: {
         Authorization: token,
       },
     });
-
-    console.log(response);
-  } catch (error) {}
+    notif.resolve(response.message);
+  } catch (error) {
+    // @ts-ignore
+    notif.reject(error.response._data.message);
+  }
 };
 </script>

@@ -15,6 +15,7 @@ export const useAuthStore = defineStore("auth", {
   },
   actions: {
     async login(username: string, password: string) {
+      const notif = push.promise("در حال ورود به حساب کاربری...");
       const runtimeConfig = useRuntimeConfig();
       const baseUrl = runtimeConfig.public.baseUrl;
       try {
@@ -30,10 +31,12 @@ export const useAuthStore = defineStore("auth", {
         );
         this.user = response.data;
         localStorage.setItem("token", response.data.token);
+        notif.resolve(response.message);
         return navigateTo("/");
       } catch (error) {
         // @ts-ignore
-        console.log(error.response._data);
+        notif.reject(error.response._data.message);
+        // console.log(error.response._data);
       }
     },
     async signup(
@@ -42,6 +45,8 @@ export const useAuthStore = defineStore("auth", {
       password: string,
       role: IRole
     ) {
+      const notif = push.promise("در حال ایجاد حساب کاربری جدید...");
+
       const runtimeConfig = useRuntimeConfig();
       const baseUrl = runtimeConfig.public.baseUrl;
       try {
@@ -54,10 +59,12 @@ export const useAuthStore = defineStore("auth", {
             role,
           },
         });
+        notif.resolve(response.message);
         return navigateTo("/");
       } catch (error) {
         // @ts-ignore
-        console.log(error.response._data);
+        notif.reject(error.response._data.message);
+        // console.log();
       }
     },
     async validate() {
@@ -77,6 +84,8 @@ export const useAuthStore = defineStore("auth", {
 
         // (response);
         this.user = response.data;
+        push.success(response.message);
+
         return navigateTo("/");
       } catch (error) {
         // @ts-ignore

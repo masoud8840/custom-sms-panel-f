@@ -67,9 +67,10 @@ const initialFetch = async () => {
 await initialFetch();
 
 const onDelete = async (id: string) => {
+  const notif = push.promise("در حال حذف کد عملیاتی...");
   try {
     const runtimeConfigs = useRuntimeConfig();
-    const response = await $fetch(
+    const response = await $fetch<IRequest<{}>>(
       `${runtimeConfigs.public.baseUrl}/codes/${id}`,
       {
         method: "DELETE",
@@ -79,10 +80,11 @@ const onDelete = async (id: string) => {
       }
     );
 
+    notif.resolve(response.message);
     await initialFetch();
   } catch (error) {
     // @ts-ignore
-    console.log(error.response._data);
+    notif.reject(error.response._data.message);
   }
 };
 </script>

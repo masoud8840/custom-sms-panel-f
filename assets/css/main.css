@@ -49,3 +49,7 @@ html {
 .msg-text {
   @apply font-semibold text-center text-xl text-text-main;
 }
+/* NOTIVUE */
+.Notivue__content-message {
+  overflow: hidden !important;
+}

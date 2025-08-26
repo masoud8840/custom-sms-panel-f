@@ -4,11 +4,16 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
-  modules: ["@pinia/nuxt"],
+  modules: ["@pinia/nuxt", "notivue/nuxt"],
   vite: {
     plugins: [tailwindcss()],
   },
-  css: ["./assets/css/main.css"],
+  css: [
+    "./assets/css/main.css",
+    "notivue/notification.css",
+    "notivue/animations.css",
+    "notivue/notification-progress.css",
+  ],
   app: {
     head: {
       htmlAttrs: {
@@ -21,6 +26,18 @@ export default defineNuxtConfig({
     public: {
       baseUrl: "http://localhost:3001/api/v1",
       // baseUrl: "http://81.12.41.178:81/api/v1",
+    },
+  },
+
+  notivue: {
+    position: "bottom-left",
+    limit: 3,
+    enqueue: true,
+    avoidDuplicates: true,
+    notifications: {
+      global: {
+        duration: 3000,
+      },
     },
   },
 

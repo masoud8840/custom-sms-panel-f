@@ -1,6 +1,6 @@
 <template>
   <main class="identity-view">
-    <ul class="users-list space-y-6">
+    <ul class="users-list space-y-6" v-if="usersExceptCurrentUser?.length">
       <li
         class="users-item text-text-main border border-text-secondary/15 hover:border-text-main/100 duration-150 transition rounded-lg grid py-3 px-4"
         v-for="user in usersExceptCurrentUser"
@@ -69,6 +69,7 @@
         </ul>
       </li>
     </ul>
+    <h3 v-else class="msg-text">کاربری وجود ندارد!  </h3>
   </main>
 </template>
 
@@ -98,14 +99,21 @@ const initFetch = async () => {
 await initFetch();
 
 const onVerify = async (id: string) => {
+  const notif = push.promise("در حال انجام تغییرات...");
   try {
-    const response = await $fetch(`${baseUrl}/users/${id}`, {
+    const response = await $fetch<IRequest<{}>>(`${baseUrl}/users/${id}`, {
       headers: {
         Authorization: token,
       },
     });
+
+    notif.resolve(response.message);
+
     await initFetch();
-  } catch (error) {}
+  } catch (error) {
+    // @ts-ignore
+    notif.reject(error.response._data.message);
+  }
 };
 
 const onDelete = async (id: string) => {

@@ -85,6 +85,7 @@ const initialFetch = async () => {
 await initialFetch();
 
 const onEdit = async () => {
+  const notif = push.promise("در حال ویرایش...");
   // "CODE" name clash
   const { code: keyCode, name, response } = code.value;
   const isCodeANumber = Number(keyCode);
@@ -94,7 +95,7 @@ const onEdit = async () => {
     const runtimeConfigs = useRuntimeConfig();
     const baseUrl = runtimeConfigs.public.baseUrl;
 
-    const fetchResponse = await $fetch(
+    const fetchResponse = await $fetch<IRequest<{}>>(
       `${baseUrl}/codes/${useRoute().params.slug}`,
       {
         method: "PUT",
@@ -104,9 +105,10 @@ const onEdit = async () => {
         },
       }
     );
+    notif.resolve(fetchResponse.message);
   } catch (error) {
     // @ts-ignore
-    console.log(error.response._data);
+    notif.reject(error.response._data.message);
   } finally {
     return navigateTo("/messages/codes");
   }

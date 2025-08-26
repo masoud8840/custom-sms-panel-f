@@ -43,7 +43,8 @@
     </section>
     <button
       type="submit"
-      class="w-fit px-6 py-2 text-base font-medium cursor-pointer hover:bg-primary hover:text-white rounded-md border border-primary text-primary"
+      class="disabled:cursor-default disabled:border-text-main/25 disabled:text-text-main/25 w-fit px-6 py-2 text-base font-medium cursor-pointer not-[:disabled]:hover:bg-primary hover:text-white rounded-md border border-primary text-primary"
+      :disabled="['n/a', 'default'].includes(selectedCodeId)"
     >
       ارسال پیامک
     </button>
@@ -69,19 +70,28 @@ const initialFetch = async () => {
 await initialFetch();
 
 const onSubmit = async () => {
+  const notif = push.promise("در حال  ارسال پیامک ...");
   const body = {
     cellphone: cellphone.value,
     codeId: selectedCodeId.value,
   };
   const token = localStorage.getItem("token") || "";
   try {
-    const response = await $fetch(`${baseUrl}/messages/sendfrom`, {
-      method: "POST",
-      headers: {
-        Authorization: token,
-      },
-      body: body,
-    });
-  } catch (error) {}
+    const response = await $fetch<IRequest<{}>>(
+      `${baseUrl}/messages/sendfrom`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+        body: body,
+      }
+    );
+    console.log(response);
+    notif.resolve(response.message);
+  } catch (error) {
+    // @ts-ignore
+    notif.reject(error.response._data.message);
+  }
 };
 </script>

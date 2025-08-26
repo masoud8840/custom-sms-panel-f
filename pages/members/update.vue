@@ -51,6 +51,8 @@
   </main>
 </template>
 <script lang="ts" setup>
+import type { IRequest } from "~/types/types";
+
 useHead({
   title: "عملیات اعضاء | بروزرسانی",
 });
@@ -85,20 +87,24 @@ let inProgress = false;
 const baseUrl = useRuntimeConfig().public.baseUrl;
 const token = localStorage.getItem("token") || "";
 const handleUploadFile = async () => {
+  const notif = push.promise("در حال ارسال اطلاعات...");
   inProgress = true;
   if (!fileInput.value.file) return;
   const formData = new FormData();
   formData.append("file", fileInput.value.file);
 
   try {
-    const response = await $fetch(`${baseUrl}/members/update`, {
+    const response = await $fetch<IRequest<{}>>(`${baseUrl}/members/update`, {
       method: "POST",
       body: formData,
       headers: {
         Authorization: token,
       },
     });
+    notif.resolve(response.message);
   } catch (error) {
+    // @ts-ignore
+    notif.reject(error.response._data.message);
   } finally {
     inProgress = false;
   }

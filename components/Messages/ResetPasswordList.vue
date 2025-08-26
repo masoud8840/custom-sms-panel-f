@@ -53,11 +53,12 @@
     </section>
     <button
       type="button"
-      class="w-fit flex gap-2 items-center px-6 py-1.5 text-base font-medium cursor-pointer hover:bg-primary hover:text-white rounded-lg border border-primary text-primary"
+      class="disabled:cursor-default disabled:border-text-main/25 disabled:text-text-main/25 w-fit flex gap-2 items-center px-6 py-1.5 text-base font-medium cursor-pointer not-[:disabled]:hover:bg-primary hover:text-white rounded-lg border border-primary text-primary"
       @click="fetchSendingResponseMessages"
+      :disabled="checkedCells.length < 1"
     >
-      <IconsSearch class="size-6" />
-      جستجو
+      <IconsDoubleCheck class="size-6" />
+      تایید بازیابی رمز عبور
     </button>
   </template>
   <h3 v-else class="msg-text">هیچ پیام بازیابی رمز عبوری دریافت نشده است!</h3>
@@ -83,8 +84,9 @@ const fetchMessages = async () => {
 await fetchMessages();
 
 const fetchSendingResponseMessages = async () => {
+  const notif = push.promise("در حال ارسال...");
   try {
-    const response = await $fetch(`${baseUrl}/messages/reset`, {
+    const response = await $fetch<IRequest<{}>>(`${baseUrl}/messages/reset`, {
       method: "POST",
       body: {
         ids: checkedCells.value,
@@ -93,8 +95,14 @@ const fetchSendingResponseMessages = async () => {
         },
       },
     });
-    console.log(response);
-  } catch (error) {}
+
+    notif.resolve(response.message);
+    await fetchMessages();
+    checkedCells.value = [];
+  } catch (error) {
+    // @ts-ignore
+    notif.reject(error.response._data.message);
+  }
 };
 
 const addChecked = (id: string) => {
@@ -105,7 +113,6 @@ const addChecked = (id: string) => {
 
 const syncChilds = (e: Event) => {
   const target = e.target as HTMLInputElement;
-  console.log(target.checked);
   if (target.checked) {
     messages.value.map((message) => {
       checkedCells.value.push(message._id);
